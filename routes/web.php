@@ -10,6 +10,9 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\MonitoringController;
 
+use Illuminate\Support\Facades\Artisan;
+
+
 /*
 |--------------------------------------------------------------------------
 | ROOT
@@ -117,6 +120,22 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/divisions/{division}/assign', [DivisionController::class, 'assign'])
             ->name('divisions.assign');
     });
+
+/*
+|--------------------------------------------------------------------------
+| Sementara 
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/seed-admin', function () {
+    Artisan::call('db:seed', [
+        '--class' => 'AdminSeeder',
+        '--force' => true
+    ]);
+
+    return 'AdminSeeder executed successfully';
+});
+
 /*
 |--------------------------------------------------------------------------
 | presensi
